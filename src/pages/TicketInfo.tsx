@@ -6,7 +6,7 @@ import {TicketsContext} from "../App";
 import {TransportIcon} from "../components/TransportIcon";
 import {CompanyLogo} from "../components/CompanyLogo";
 import {ContextData} from "../types";
-import {parseTime} from "../helpers";
+import {parseDate, parseTime} from "../helpers";
 
 
 export default function TicketInfo() {
@@ -19,12 +19,14 @@ export default function TicketInfo() {
     const ticket = contextTickets.tickets.find((ticket) => {
       return ticket.id == +pathname[pathname.length - 1]
     })
+
+
     price = ticket?.price && Math.round(ticket.price) || ''
     segments = ticket?.segments
   }
 
   // get this information from the ticket that the user selected.
-  const date = "Fri, 27 Aug";
+  const date = parseDate(segments && segments[0].departure.time || '');
   const departureTime = parseTime(segments && segments[0].departure.time || '');
   const departureCity = segments && segments[0].departure.city;
   const departureStation = segments && segments[0].departure.station;

@@ -6,3 +6,12 @@ export const parseTime = (date: string) => {
     });
     return time;
 };
+
+export const parseDate = (date: string) => {
+    const fullDate = new Date(date);
+    const day = fullDate.toLocaleDateString("en-US", { weekday: 'short' });
+    const monthDate = fullDate.toLocaleDateString("en-US", { day: 'numeric' });
+    const month = fullDate.toLocaleDateString("en-US", { month: 'short' });
+
+    return `${day}, ${monthDate} ${month}`;
+};
