@@ -18,6 +18,12 @@ export type Segment = {
 };
 
 export type Ticket = {
+  id: number;
   price: number;
   segments: Segment[];
+};
+
+export type ContextData = {
+  tickets: Ticket[] | null;
+  handleTickets: (arg: Ticket[]) => void;
 };

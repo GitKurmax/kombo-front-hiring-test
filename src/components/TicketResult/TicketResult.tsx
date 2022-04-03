@@ -27,7 +27,7 @@ export default function TicketResult({ ticket }: { ticket: Ticket }) {
   const arrivalTime = parseTime(lastTrip.arrival.time);
 
   return (
-    <Link to="/ticket">
+    <Link to={`/ticket/${ticket.id}`}>
       <div className={styles["ticket"]}>
         <div>
           {/* we will always only display the first transport type */}
