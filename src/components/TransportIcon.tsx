@@ -7,6 +7,7 @@ import { ReactComponent as TrainIcon } from "../assets/svg/transportTypes/train.
 type Props = {
   transportType: TransportType;
 };
+
 export function TransportIcon({ transportType }: Props) {
   switch (transportType) {
     case "bus":

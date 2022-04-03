@@ -6,14 +6,8 @@ import {TicketsContext} from "../App";
 import {TransportIcon} from "../components/TransportIcon";
 import {CompanyLogo} from "../components/CompanyLogo";
 import {ContextData} from "../types";
+import {parseTime} from "../helpers";
 
-const parseTime = (date: string) => {
-  return new Date(date).toLocaleTimeString("en-US", {
-    hour12: false,
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-};
 
 export default function TicketInfo() {
   const contextTickets = useContext<ContextData | undefined>(TicketsContext);
@@ -44,27 +38,26 @@ export default function TicketInfo() {
         <div className={styles["date"]}>{date}</div>
         {/* keep in mind, trip should be repeated for the number of trips on the ticket */}
         {segments && segments.map((segment, index) => (
-            <div key={index} className={styles["trip"]}>
-              <div className={styles["departure"]}>
-                <p className={styles["time"]}>{departureTime}</p>
-                <div className={styles["location"]}>
-                  <p className={styles["city"]}>{departureCity}</p>
-                  <p className={styles["station"]}>{departureStation}</p>
-                </div>
-              </div>
-              <div className={styles["transport-type"]}>
-                <TransportIcon transportType={segment.transportType}/>
-                <CompanyLogo companySlug={segment.companySlug}/>
-              </div>
-              <div className={styles["arrival"]}>
-                <p className={styles["time"]}>{arrivalTime}</p>
-                <div className={styles["location"]}>
-                  <p className={styles["city"]}>{arrivalCity}</p>
-                  <p className={styles["station"]}>{arrivalStation}</p>
-                </div>
+          <div key={index} className={styles["trip"]}>
+            <div className={styles["departure"]}>
+              <p className={styles["time"]}>{departureTime}</p>
+              <div className={styles["location"]}>
+                <p className={styles["city"]}>{departureCity}</p>
+                <p className={styles["station"]}>{departureStation}</p>
               </div>
             </div>
-
+            <div className={styles["transport-type"]}>
+              <TransportIcon transportType={segment.transportType}/>
+              <CompanyLogo companySlug={segment.companySlug}/>
+            </div>
+            <div className={styles["arrival"]}>
+              <p className={styles["time"]}>{arrivalTime}</p>
+              <div className={styles["location"]}>
+                <p className={styles["city"]}>{arrivalCity}</p>
+                <p className={styles["station"]}>{arrivalStation}</p>
+              </div>
+            </div>
+          </div>
         ))}
         <div className={styles["price"]}>Total Price: {price + " €"}</div>
       </div>
