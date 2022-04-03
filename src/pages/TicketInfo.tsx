@@ -1,5 +1,5 @@
-import React, {useContext} from "react";
-import { useLocation } from "react-router-dom";
+import React, {useContext, useEffect} from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import styles from "./TicketInfo.module.scss";
 import {TicketsContext} from "../App";
@@ -12,6 +12,7 @@ import {parseDate, parseTime} from "../helpers";
 export default function TicketInfo() {
   const contextTickets = useContext<ContextData | undefined>(TicketsContext);
   const {pathname} = useLocation();
+  const navigate = useNavigate();
 
   let price, segments;
 
@@ -23,6 +24,12 @@ export default function TicketInfo() {
     price = (ticket?.price && Math.round(ticket.price)) || ''
     segments = ticket?.segments
   }
+
+  useEffect(() => {
+    if (contextTickets && !contextTickets.tickets) {
+      navigate('/')
+    }
+  },[])
 
   // get this information from the ticket that the user selected.
   const date = parseDate((segments && segments[0].departure.time) || '');
