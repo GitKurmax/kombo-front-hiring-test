@@ -6,6 +6,18 @@ import { ReactComponent as DemoSearch } from "./../assets/svg/demosearch.svg";
 import styles from "./Home.module.scss";
 import {TicketsContext} from "../App";
 
+type SetContextProps = {
+  tickets: Ticket[];
+  setTickets: (arg: Ticket[])=>void;
+}
+
+function SetContext({tickets, setTickets}: SetContextProps) {
+  useEffect(() => {
+    if(tickets) setTickets(tickets)
+  })
+
+  return null
+}
 
 function Home() {
   const [allTickets, setAllTickets] = useState<Ticket[]>([]);
@@ -27,10 +39,9 @@ function Home() {
         <TicketsContext.Consumer>
           {
             (context) => {
-
-              context && context.handleTickets(allTickets)
-
               return (
+                <>
+                  <SetContext tickets={allTickets} setTickets={(context && context.handleTickets) || (()=>{})}/>
                   <div className={styles["tickets-container"]}>
                     {allTickets.length > 0 ? (
                         allTickets.map((ticket, index) => {
@@ -40,10 +51,10 @@ function Home() {
                         <p>Loading...</p>
                     )}
                   </div>
+                </>
               )
             }
           }
-
         </TicketsContext.Consumer>
     </div>
   );
