@@ -17,20 +17,19 @@ export default function TicketInfo() {
 
   if (contextTickets && contextTickets.tickets) {
     const ticket = contextTickets.tickets.find((ticket) => {
-      return ticket.id == +pathname[pathname.length - 1]
+      return ticket.id === +pathname[pathname.length - 1]
     })
 
-
-    price = ticket?.price && Math.round(ticket.price) || ''
+    price = (ticket?.price && Math.round(ticket.price)) || ''
     segments = ticket?.segments
   }
 
   // get this information from the ticket that the user selected.
-  const date = parseDate(segments && segments[0].departure.time || '');
-  const departureTime = parseTime(segments && segments[0].departure.time || '');
+  const date = parseDate((segments && segments[0].departure.time) || '');
+  const departureTime = parseTime((segments && segments[0].departure.time) || '');
   const departureCity = segments && segments[0].departure.city;
   const departureStation = segments && segments[0].departure.station;
-  const arrivalTime = parseTime(segments && segments[0].arrival.time || '');
+  const arrivalTime = parseTime((segments && segments[0].arrival.time) || '');
   const arrivalCity = segments && segments[0].arrival.city;
   const arrivalStation = segments && segments[0].arrival.station;
 
