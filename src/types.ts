@@ -23,7 +23,4 @@ export type Ticket = {
   segments: Segment[];
 };
 
-export type ContextData = {
-  tickets: Ticket[] | null;
-  handleTickets: (arg: Ticket[]) => void;
-};
+export type ContextData = Ticket[] | null;

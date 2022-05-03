@@ -4,7 +4,6 @@ import { Api } from "../service/api";
 import {Ticket} from "../types";
 import { ReactComponent as DemoSearch } from "./../assets/svg/demosearch.svg";
 import styles from "./Home.module.scss";
-import {TicketsContext} from "../App";
 
 type SetContextProps = {
   tickets: Ticket[];
@@ -19,7 +18,7 @@ function SetContext({tickets, setTickets}: SetContextProps) {
   return null
 }
 
-function Home() {
+function Home({handleTickets}: any) {
   const [allTickets, setAllTickets] = useState<Ticket[]>([]);
 
   useEffect(() => {
@@ -28,6 +27,7 @@ function Home() {
         return {...ticket, id: index, }
       })
       setAllTickets(ticketsWithId);
+      handleTickets(ticketsWithId);
     });
   }, []);
 
@@ -36,26 +36,15 @@ function Home() {
       <div className={styles["search-container"]}>
         <DemoSearch className={styles["demo-search"]} />
       </div>
-        <TicketsContext.Consumer>
-          {
-            (context) => {
-              return (
-                <>
-                  <SetContext tickets={allTickets} setTickets={(context && context.handleTickets) || (()=>{})}/>
-                  <div className={styles["tickets-container"]}>
-                    {allTickets.length > 0 ? (
-                        allTickets.map((ticket, index) => {
-                          return <TicketResult key={index} ticket={ticket}/>
-                        })
-                    ) : (
-                        <p>Loading...</p>
-                    )}
-                  </div>
-                </>
-              )
-            }
-          }
-        </TicketsContext.Consumer>
+        <div className={styles["tickets-container"]}>
+          {allTickets.length > 0 ? (
+              allTickets.map((ticket, index) => {
+                return <TicketResult key={index} ticket={ticket}/>
+              })
+          ) : (
+              <p>Loading...</p>
+          )}
+        </div>
     </div>
   );
 }

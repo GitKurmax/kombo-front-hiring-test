@@ -10,14 +10,14 @@ import {parseDate, parseTime} from "../helpers";
 
 
 export default function TicketInfo() {
-  const contextTickets = useContext<ContextData | undefined>(TicketsContext);
+  const tickets = useContext<ContextData>(TicketsContext);
   const {pathname} = useLocation();
   const navigate = useNavigate();
 
   let price, segments;
 
-  if (contextTickets && contextTickets.tickets) {
-    const ticket = contextTickets.tickets.find((ticket) => {
+  if (tickets) {
+    const ticket = tickets.find((ticket) => {
       return ticket.id === +pathname[pathname.length - 1]
     })
 
@@ -26,7 +26,7 @@ export default function TicketInfo() {
   }
 
   useEffect(() => {
-    if (contextTickets && !contextTickets.tickets) {
+    if (!tickets) {
       navigate('/')
     }
   },[])

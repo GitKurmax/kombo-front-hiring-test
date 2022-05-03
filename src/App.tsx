@@ -4,16 +4,13 @@ import Header from "./components/Header/Header";
 import styles from "./index.module.scss";
 import Home from "./pages/Home";
 import TicketInfo from "./pages/TicketInfo";
-import {ContextData, Ticket} from "./types";
+import {Ticket} from "./types";
 
-export const TicketsContext = React.createContext<ContextData | undefined>(undefined);
+export const TicketsContext = React.createContext<Ticket[] | null>(null);
 
 function App() {
   const [tickets, setTickets] = useState<Ticket[] | null>(null)
 
-    useEffect(() => {
-
-    }, [])
   const handleTickets = (tickets: Ticket[]) => {
       setTickets(tickets)
   }
@@ -22,9 +19,9 @@ function App() {
     <HashRouter>
       <Header />
       <div className={styles["kombo-content"]}>
-          <TicketsContext.Provider value={{tickets, handleTickets}}>
+          <TicketsContext.Provider value={tickets}>
               <Routes>
-                  <Route path="/" element={<Home />} />
+                  <Route path="/" element={<Home handleTickets={handleTickets}/>} />
                   <Route path="/ticket/:id" element={<TicketInfo />} />
               </Routes>
           </TicketsContext.Provider>
