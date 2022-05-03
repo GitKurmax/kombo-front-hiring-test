@@ -5,20 +5,11 @@ import {Ticket} from "../types";
 import { ReactComponent as DemoSearch } from "./../assets/svg/demosearch.svg";
 import styles from "./Home.module.scss";
 
-type SetContextProps = {
-  tickets: Ticket[];
-  setTickets: (arg: Ticket[])=>void;
+type Props = {
+  handleTickets: (arg: Ticket[])=>void;
 }
 
-function SetContext({tickets, setTickets}: SetContextProps) {
-  useEffect(() => {
-    if(tickets) setTickets(tickets)
-  })
-
-  return null
-}
-
-function Home({handleTickets}: any) {
+function Home({handleTickets}: Props) {
   const [allTickets, setAllTickets] = useState<Ticket[]>([]);
 
   useEffect(() => {
